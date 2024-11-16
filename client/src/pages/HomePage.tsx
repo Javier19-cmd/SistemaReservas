@@ -1,29 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import './HomePage.css';
 
 const HomePage: React.FC = () => {
-  const [events, setEvents] = useState([]);
-
-  const API_URL = process.env.REACT_APP_API_URL;
-
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/api/events`);
-        setEvents(response.data);
-      } catch (error) {
-        console.error('Error al obtener los eventos', error);
-      }
-    };
-    fetchEvents();
-  }, []);
-
   return (
-    <div>
-      <div>
-        <Link to="/login">Iniciar Sesión</Link> | <Link to="/register">Registrarse</Link>
-      </div>
+    <div className="home-page">
+      <header className="header">
+        <h1>Bienvenido al sistema de eventos</h1>
+      </header>
+
+      <main className="main-content">
+        <div className="auth-links">
+          <Link to="/login" className="auth-link">Iniciar Sesión</Link>
+          <Link to="/register" className="auth-link">Registrarse</Link>
+        </div>
+      </main>
     </div>
   );
 };

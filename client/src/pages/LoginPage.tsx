@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './LoginPage.css';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -14,20 +15,38 @@ const LoginPage: React.FC = () => {
     try {
       const response = await axios.post(`${API_URL}/api/users/login`, { email, password });
       localStorage.setItem('token', response.data.token);
-      navigate('/');
+      navigate('/events');
     } catch (error) {
       console.error('Error al iniciar sesión', error);
     }
   };
 
   return (
-    <div>
-      <h1>Iniciar Sesión</h1>
-      <form onSubmit={handleLogin}>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" />
-        <button type="submit">Iniciar Sesión</button>
-      </form>
+    <div className="login-page">
+      <div className="form-container">
+        <h1>Iniciar Sesión</h1>
+        <form onSubmit={handleLogin}>
+          <div className="input-group">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Correo electrónico"
+              required
+            />
+          </div>
+          <div className="input-group">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Contraseña"
+              required
+            />
+          </div>
+          <button type="submit">Ingresar</button>
+        </form>
+      </div>
     </div>
   );
 };

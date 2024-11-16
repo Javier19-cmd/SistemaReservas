@@ -1,0 +1,70 @@
+/* Estilos para la página de inicio de sesión */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+  }
+  
+  .login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  .form-container {
+    background-color: #fff;
+    padding: 2.5em 2em;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Limita el ancho máximo del formulario */
+  }
+  
+  .form-container h1 {
+    margin-bottom: 1.5em;
+    text-align: center;
+    color: #333;
+  }
+  
+  .form-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra los elementos horizontalmente */
+  }
+  
+  .input-group {
+    margin-bottom: 1em;
+    width: 100%; /* Asegura que los inputs ocupen todo el ancho disponible */
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 0.75em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box; /* Incluye padding y border en el cálculo del ancho */
+  }
+  
+  .input-group input:focus {
+    border-color: #4CAF50;
+    outline: none;
+  }
+  
+  button {
+    width: 100%; /* El botón ocupa todo el ancho del formulario */
+    padding: 0.75em;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+    cursor: pointer;
+  }
+  

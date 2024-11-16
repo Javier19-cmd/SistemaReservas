@@ -1,0 +1,136 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+  
+  .events-page {
+    padding: 2em;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 2em;
+  }
+  
+  .page-header h1 {
+    font-size: 2.5rem;
+    color: #4CAF50;
+    margin-bottom: 0.5em;
+  }
+  
+  .page-header p {
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  /* Contenedor de eventos */
+  .events-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Tarjeta de evento */
+  .event-card {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    border-radius: 10px;
+    width: 320px;
+    padding: 1.5em;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-content h2 {
+    font-size: 1.8rem;
+    margin: 0 0 0.5em;
+  }
+  
+  .event-date {
+    font-size: 1rem;
+    margin-bottom: 1em;
+    color: #e0f7e9;
+  }
+  
+  .event-description {
+    font-size: 1rem;
+    margin-bottom: 1.5em;
+    line-height: 1.5;
+  }
+  
+  /* Botón de detalles */
+  .details-button {
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    background-color: #fff;
+    color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .details-button:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  /* Spinner de carga */
+  .loading-spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #4CAF50;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 2em auto;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Mensajes */
+  .error-message {
+    color: red;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-top: 2em;
+  }
+  
+  .no-events {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #666;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .event-card {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .event-card {
+      width: 90%;
+    }
+  }
+  

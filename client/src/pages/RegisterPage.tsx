@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './RegisterPage.css';
 
 const RegisterPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -21,14 +22,43 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Registrarse</h1>
-      <form onSubmit={handleRegister}>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Nombre" />
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Contraseña" />
-        <button type="submit">Registrarse</button>
-      </form>
+    <div className="register-page">
+      <div className="form-container">
+        <h1>Registrarse</h1>
+        <form onSubmit={handleRegister}>
+          <div className="input-group">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Nombre"
+              required
+            />
+          </div>
+          <div className="input-group">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Correo electrónico"
+              required
+            />
+          </div>
+          <div className="input-group">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Contraseña"
+              required
+            />
+          </div>
+          <button type="submit">Registrarse</button>
+        </form>
+        <p className="login-link">
+          ¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a>
+        </p>
+      </div>
     </div>
   );
 };
