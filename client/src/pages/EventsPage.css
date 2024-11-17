@@ -1,187 +1,230 @@
 /* Estilos generales */
 body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+.events-page {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  color: #4CAF50;
+  margin-bottom: 0.5em;
+}
+
+.page-header p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Contenedor de eventos */
+.events-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Tarjeta de evento */
+.event-card {
+  background: white;
+  color: #333;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 320px;
+  padding: 1.5em;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.event-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 10px;
+  background: linear-gradient(180deg, #4CAF50, #45a049);
+}
+
+.event-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card-content h2 {
+  font-size: 1.8rem;
+  margin: 0 0 0.5em;
+  color: #4CAF50;
+}
+
+.event-date, .event-description, .event-capacity, .event-reservations {
+  font-size: 1rem;
+  margin-bottom: 1em;
+}
+
+.event-description {
+  color: #555;
+}
+
+.event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+}
+
+.event-info strong {
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+/* Botón de detalles */
+.details-button {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  outline: none;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.details-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.details-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Spinner de carga */
+.loading-spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #4CAF50;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 2em auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .events-page {
-    padding: 2em;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .page-header {
-    text-align: center;
-    margin-bottom: 2em;
-  }
-  
-  .page-header h1 {
-    font-size: 2.5rem;
-    color: #4CAF50;
-    margin-bottom: 0.5em;
-  }
-  
-  .page-header p {
-    font-size: 1.2rem;
-    color: #666;
-  }
-  
-  /* Contenedor de eventos */
-  .events-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2em;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Tarjeta de evento */
+}
+
+/* Mensajes */
+.success-message {
+  color: #28a745;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.no-events {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #666;
+  margin-top: 2em;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
   .event-card {
-    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-    color: white;
-    border-radius: 10px;
-    width: 320px;
-    padding: 1.5em;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .event-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card-content h2 {
-    font-size: 1.8rem;
-    margin: 0 0 0.5em;
-  }
-  
-  .event-date {
-    font-size: 1rem;
-    margin-bottom: 1em;
-    color: #e0f7e9;
-  }
-  
-  .event-description {
-    font-size: 1rem;
-    margin-bottom: 1.5em;
-    line-height: 1.5;
-  }
-  
-  /* Botón de detalles */
-  .details-button {
-    display: inline-block;
-    padding: 0.75em 1.5em;
-    background-color: #fff;
-    color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .details-button:hover {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  /* Spinner de carga */
-  .loading-spinner {
-    border: 6px solid #f3f3f3;
-    border-top: 6px solid #4CAF50;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 2em auto;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  /* Mensajes */
-  .error-message {
-    color: red;
-    font-size: 1.2rem;
-    text-align: center;
-    margin-top: 2em;
-  }
-  
-  .no-events {
-    font-size: 1.2rem;
-    text-align: center;
-    color: #666;
-  }
-  
-  /* Responsividad */
-  @media (max-width: 768px) {
-    .event-card {
-      width: 100%;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .event-card {
-      width: 90%;
-    }
-  }
-  
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
   }
-  
-  .modal {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    max-width: 400px;
+}
+
+@media (max-width: 480px) {
+  .event-card {
     width: 90%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-  
-  .confirm-button {
-    background: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px;
-  }
-  
-  .confirm-button:hover {
-    background: #218838;
-  }
-  
-  .cancel-button {
-    background: #dc3545;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 10px;
-  }
-  
-  .cancel-button:hover {
-    background: #c82333;
-  }
-  
+}
+
+/* Modal overlay (opcional si se quiere agregar modal en el futuro) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-button {
+  background: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.confirm-button:hover {
+  background: #218838;
+}
+
+.cancel-button {
+  background: #dc3545;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.cancel-button:hover {
+  background: #c82333;
+}

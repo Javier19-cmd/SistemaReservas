@@ -5,7 +5,7 @@ const {
   obtenerReservasUsuario,
   obtenerReservasEvento,
   cancelarReserva,
-} = require('../controllers/reservationController');
+} = require('../controllers/reservationController'); // Asegúrate de que esta ruta es correcta
 const { verificarToken } = require('../middleware/authMiddleware');
 
 // Crear una reserva (usuarios autenticados)
@@ -14,7 +14,7 @@ router.post('/', verificarToken, crearReserva);
 // Obtener reservas del usuario autenticado
 router.get('/mis-reservas', verificarToken, obtenerReservasUsuario);
 
-// Obtener reservas de un evento específico
+// Obtener reservas de un evento específico (opcionalmente solo para administradores)
 router.get('/evento/:eventoId', verificarToken, obtenerReservasEvento);
 
 // Cancelar una reserva

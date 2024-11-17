@@ -1,0 +1,79 @@
+/* Estilo para EventDetail */
+.event-detail-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .event-detail-card {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .event-detail-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+  }
+  
+  .event-detail-card h1 {
+    font-size: 2.5rem;
+    color: #4caf50;
+    margin-bottom: 20px;
+  }
+  
+  .event-description,
+  .event-date,
+  .event-capacity,
+  .event-reservations {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .reserve-button {
+    display: inline-block;
+    padding: 0.75em 1.5em;
+    background-color: #4caf50;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .reserve-button:hover {
+    background-color: #45a049;
+    transform: translateY(-3px);
+  }
+  
+  .reserve-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .success-message {
+    color: #28a745;
+    font-size: 1.2rem;
+    margin-top: 20px;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 1.2rem;
+    margin-top: 20px;
+  }
+  
+  /* Spinner de carga */
+  .loading {
+    font-size: 1.5rem;
+    color: #666;
+    text-align: center;
+    margin-top: 50px;
+  }
+  

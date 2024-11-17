@@ -6,28 +6,49 @@ type ReservationFormProps = {
 };
 
 const ReservationForm: React.FC<ReservationFormProps> = ({ eventId }) => {
-  const [userId, setUserId] = useState('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
-  const handleReservation = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleReserve = async () => {
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/reservations`, { eventId, userId });
-      alert('Reserva realizada con éxito');
-    } catch (error) {
-      console.error('Error al realizar la reserva', error);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('Por favor, inicia sesión para realizar una reserva.');
+        return;
+      }
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/reservations`,
+        { eventoId: eventId },
+        config
+      );
+
+      setSuccessMessage(response.data.mensaje);
+      setError('');
+
+      // Ocultar el mensaje después de 3 segundos
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
+    } catch (err: any) {
+      console.error('Error al reservar:', err);
+      setError(
+        err.response?.data?.mensaje || 'Error al realizar la reserva. Inténtalo de nuevo.'
+      );
+      setSuccessMessage('');
     }
   };
 
   return (
-    <form onSubmit={handleReservation}>
-      <input
-        type="text"
-        value={userId}
-        onChange={(e) => setUserId(e.target.value)}
-        placeholder="ID de Usuario"
-      />
-      <button type="submit">Reservar</button>
-    </form>
+    <div className="reservation-form">
+      {successMessage && <p className="success-message">{successMessage}</p>}
+      {error && <p className="error-message">{error}</p>}
+      <button onClick={handleReserve} className="details-button">Reservar</button>
+    </div>
   );
 };
 

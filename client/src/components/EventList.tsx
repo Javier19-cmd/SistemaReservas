@@ -1,15 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-type Event = {
-  _id: string;
-  titulo: string;
-  descripcion: string;
-  fecha: string;
-};
+import { Event } from '../types/types';
 
 type EventListProps = {
-  events: Event[] | null; // Permitir que `events` sea null inicialmente
+  events: Event[] | null;
 };
 
 const EventList: React.FC<EventListProps> = ({ events }) => {
@@ -18,12 +12,15 @@ const EventList: React.FC<EventListProps> = ({ events }) => {
   }
 
   return (
-    <ul>
+    <ul className="event-list">
       {events.map((event) => (
-        <li key={event._id}>
-          <h2>{event.titulo}</h2>
-          <p>{event.descripcion}</p>
-          <Link to={`/event/${event._id}`}>Ver detalles</Link>
+        <li key={event._id} className="event-card">
+          <h2>{event.titulo || 'Evento sin título'}</h2>
+          <p><strong>Descripción:</strong> {event.descripcion || 'Descripción no disponible'}</p>
+          <p><strong>Fecha:</strong> {event.fecha ? new Date(event.fecha).toLocaleDateString('es-ES') : 'Fecha no disponible'}</p>
+          <p><strong>Capacidad:</strong> {event.capacidad}</p>
+          <p><strong>Reservas:</strong> {event.reservasCount}</p>
+          <Link to={`/event/${event._id}`} className="details-button">Ver detalles</Link>
         </li>
       ))}
     </ul>

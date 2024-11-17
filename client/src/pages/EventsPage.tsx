@@ -3,12 +3,12 @@ import axios from 'axios';
 import './EventsPage.css';
 
 interface Event {
-  _id: string; // MongoDB ObjectId
-  title: string;
-  date: string;
-  description: string;
-  capacidad: number; // Capacidad total del evento
-  reservasCount: number; // Número actual de reservas
+  _id: string;
+  titulo: string;
+  fecha: string;
+  descripcion: string;
+  capacidad: number;
+  reservasCount: number;
 }
 
 const EventsPage: React.FC = () => {
@@ -53,13 +53,18 @@ const EventsPage: React.FC = () => {
       };
 
       const response = await axios.post(
-        `${API_URL}/api/reservas`,
+        `${API_URL}/api/reservations`,
         { eventoId: eventId },
         config
       );
 
       setSuccessMessage(response.data.mensaje);
       setError('');
+
+      // Ocultar el mensaje después de 3 segundos
+      setTimeout(() => {
+        setSuccessMessage('');
+      }, 3000);
 
       // Update local state to reflect the reservation
       setEvents((prevEvents) =>
@@ -95,12 +100,21 @@ const EventsPage: React.FC = () => {
           events.map((event) => (
             <div key={event._id} className="event-card">
               <div className="card-content">
-                <h2>{event.title}</h2>
+                <h2>{event.titulo || 'Evento sin título'}</h2>
                 <p className="event-date">
-                  <strong>Fecha:</strong> {event.date}
+                  <strong>Fecha:</strong>{' '}
+                  {event.fecha ? new Date(event.fecha).toLocaleDateString('es-ES') : 'Fecha no disponible'}
                 </p>
-                <p className="event-description">{event.description}</p>
+                <p className="event-description">
+                  <strong>Descripción:</strong> {event.descripcion || 'Descripción no disponible'}
+                </p>
                 <p className="event-capacity">
+                  <strong>Capacidad total:</strong> {event.capacidad}
+                </p>
+                <p className="event-reservations">
+                  <strong>Reservas actuales:</strong> {event.reservasCount}
+                </p>
+                <p className="event-available-capacity">
                   <strong>Cupos disponibles:</strong>{' '}
                   {Math.max(event.capacidad - event.reservasCount, 0)}
                 </p>

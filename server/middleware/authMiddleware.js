@@ -1,10 +1,9 @@
 const jwt = require('jsonwebtoken');
 
-exports.verificarToken = async (req, res, next) => {
-  const token = req.headers['authorization'];
-
+exports.verificarToken = (req, res, next) => {
+  const token = req.header('Authorization')?.split(' ')[1];
   if (!token) {
-    return res.status(401).json({ mensaje: 'Acceso denegado. No hay token proporcionado.' });
+    return res.status(401).json({ mensaje: 'No autorizado, token no proporcionado' });
   }
 
   try {
@@ -12,6 +11,6 @@ exports.verificarToken = async (req, res, next) => {
     req.usuario = decoded;
     next();
   } catch (error) {
-    res.status(400).json({ mensaje: 'Token inválido' });
+    res.status(401).json({ mensaje: 'No autorizado, token inválido' });
   }
 };
