@@ -14,7 +14,7 @@ router.post('/', verificarToken, crearReserva);
 // Obtener reservas del usuario autenticado
 router.get('/mis-reservas', verificarToken, obtenerReservasUsuario);
 
-// Obtener reservas de un evento específico (opcionalmente solo para administradores)
+// Obtener reservas de un evento específico
 router.get('/evento/:eventoId', verificarToken, obtenerReservasEvento);
 
 // Cancelar una reserva

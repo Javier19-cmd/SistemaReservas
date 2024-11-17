@@ -15,7 +15,7 @@ app.use(express.json());
 
 // Rutas
 app.use('/api/users', userRoutes);
-app.use('/api/events', eventRoutes); // Asegúrate de que eventRoutes esté bien importado y definido
+app.use('/api/events', eventRoutes);
 app.use('/api/reservations', reservationRoutes);
 
 // Conexión a MongoDB

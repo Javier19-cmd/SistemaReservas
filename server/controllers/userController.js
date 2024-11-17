@@ -30,9 +30,8 @@ exports.registrarUsuario = async (req, res) => {
 };
 
 exports.iniciarSesion = async (req, res) => {
-  const { email, password } = req.body; // Cambiado 'contraseña' por 'password'
+  const { email, password } = req.body;
   try {
-    // Verificar que el email y la contraseña están presentes
     if (!email || !password) {
       return res.status(400).json({ mensaje: 'Por favor, proporciona email y contraseña.' });
     }
@@ -42,26 +41,23 @@ exports.iniciarSesion = async (req, res) => {
       return res.status(400).json({ mensaje: 'Credenciales inválidas.' });
     }
 
-    // Verificar que la contraseña ingresada coincida con la almacenada
-    const esContraseñaValida = await bcrypt.compare(password, usuario.password); // Cambiado 'usuario.contraseña' por 'usuario.password'
+    const esContraseñaValida = await bcrypt.compare(password, usuario.password);
     if (!esContraseñaValida) {
       return res.status(400).json({ mensaje: 'Credenciales inválidas.' });
     }
 
-    // Generar el JWT después de verificar la contraseña
     const token = jwt.sign(
-      { id: usuario._id, nombre: usuario.name, email: usuario.email }, // Cambiado 'usuario.nombre' por 'usuario.name'
+      { id: usuario._id, nombre: usuario.name, email: usuario.email, tipo: usuario.tipo }, // Incluye el rol
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-    // Devolver el token al cliente
     res.status(200).json({
       mensaje: 'Inicio de sesión exitoso.',
       token,
+      tipo: usuario.tipo, // También lo envías como respuesta directa
     });
   } catch (error) {
-    console.error('Error al iniciar sesión:', error); // Registrar el error para depuración
     res.status(500).json({ mensaje: 'Error en el servidor.' });
   }
 };

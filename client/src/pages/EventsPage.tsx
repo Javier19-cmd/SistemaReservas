@@ -3,31 +3,35 @@ import axios from 'axios';
 import './EventsPage.css';
 
 interface Event {
-  id: number;
+  _id: string; // MongoDB ObjectId
   title: string;
   date: string;
   description: string;
+  capacidad: number; // Capacidad total del evento
+  reservasCount: number; // Número actual de reservas
 }
 
 const EventsPage: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const [successMessage, setSuccessMessage] = useState<string>('');
   const API_URL = process.env.REACT_APP_API_URL;
 
+  // Fetch events on component load
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/events`);
-        const eventsData = Array.isArray(response.data) ? response.data : response.data.events;
-
-        if (Array.isArray(eventsData)) {
-          setEvents(eventsData);
-        } else {
-          setError('Formato de datos incorrecto.');
-        }
-      } catch (error) {
-        console.error('Error al obtener los eventos:', error);
+        const eventsData = Array.isArray(response.data) ? response.data : [];
+        const normalizedEvents = eventsData.map((event) => ({
+          ...event,
+          capacidad: event.capacidad || 0,
+          reservasCount: event.reservas ? event.reservas.length : 0,
+        }));
+        setEvents(normalizedEvents);
+      } catch (err) {
+        console.error('Error al obtener los eventos:', err);
         setError('Error al obtener los eventos. Por favor, inténtalo de nuevo más tarde.');
       } finally {
         setLoading(false);
@@ -36,6 +40,44 @@ const EventsPage: React.FC = () => {
     fetchEvents();
   }, [API_URL]);
 
+  const handleReserve = async (eventId: string) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('Por favor, inicia sesión para realizar una reserva.');
+        return;
+      }
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      const response = await axios.post(
+        `${API_URL}/api/reservas`,
+        { eventoId: eventId },
+        config
+      );
+
+      setSuccessMessage(response.data.mensaje);
+      setError('');
+
+      // Update local state to reflect the reservation
+      setEvents((prevEvents) =>
+        prevEvents.map((event) =>
+          event._id === eventId
+            ? { ...event, reservasCount: event.reservasCount + 1 }
+            : event
+        )
+      );
+    } catch (err: any) {
+      console.error('Error al reservar:', err);
+      setError(
+        err.response?.data?.mensaje || 'Error al realizar la reserva. Inténtalo de nuevo.'
+      );
+      setSuccessMessage('');
+    }
+  };
+
   return (
     <div className="events-page">
       <header className="page-header">
@@ -43,20 +85,33 @@ const EventsPage: React.FC = () => {
         <p>Descubre los eventos más recientes y emocionantes.</p>
       </header>
 
+      {successMessage && <p className="success-message">{successMessage}</p>}
+      {error && <p className="error-message">{error}</p>}
+
       <div className="events-container">
         {loading ? (
           <div className="loading-spinner"></div>
-        ) : error ? (
-          <p className="error-message">{error}</p>
         ) : events.length > 0 ? (
-          events.map(event => (
-            <div key={event.id} className="event-card">
+          events.map((event) => (
+            <div key={event._id} className="event-card">
               <div className="card-content">
                 <h2>{event.title}</h2>
-                <p className="event-date"><strong>Fecha:</strong> {event.date}</p>
+                <p className="event-date">
+                  <strong>Fecha:</strong> {event.date}
+                </p>
                 <p className="event-description">{event.description}</p>
+                <p className="event-capacity">
+                  <strong>Cupos disponibles:</strong>{' '}
+                  {Math.max(event.capacidad - event.reservasCount, 0)}
+                </p>
               </div>
-              <button className="details-button">Ver detalles</button>
+              <button
+                className="details-button"
+                onClick={() => handleReserve(event._id)}
+                disabled={event.reservasCount >= event.capacidad}
+              >
+                {event.reservasCount >= event.capacidad ? 'Cupos llenos' : 'Reservar'}
+              </button>
             </div>
           ))
         ) : (
