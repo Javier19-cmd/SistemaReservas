@@ -1,33 +1,27 @@
-/* Estilos generales */
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f4f4f9;
-  color: #333;
-}
-
+/* Estilo para la página de eventos */
 .events-page {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
   position: relative;
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
+/* Contenedor del botón de cerrar sesión */
 .logout-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 
+/* Estilo para el botón de cerrar sesión */
 .logout-button {
   background-color: #dc3545;
   color: white;
+  padding: 8px 12px;
   border: none;
-  padding: 5px 10px;
-  font-weight: bold;
   border-radius: 5px;
+  font-size: 0.8rem;
   cursor: pointer;
-  font-size: 0.75rem;
   transition: background-color 0.3s ease;
 }
 
@@ -35,8 +29,10 @@ body {
   background-color: #c82333;
 }
 
+/* Estilo para el encabezado */
 .page-header {
   text-align: center;
+  margin-top: 60px; /* Deja espacio suficiente para el botón de logout */
   margin-bottom: 20px;
 }
 
@@ -51,99 +47,54 @@ body {
   color: #666;
 }
 
-/* Contenedor de eventos */
+/* Estilo de los eventos */
 .events-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  justify-content: center;
 }
 
-/* Tarjeta de evento */
 .event-card {
   background: #fff;
   border-radius: 10px;
-  width: 320px;
-  padding: 1.5em;
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
 }
 
 .event-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
 }
 
 .card-content h2 {
-  font-size: 1.8rem;
-  margin: 0 0 0.5em;
   color: #4caf50;
-}
-
-.event-date,
-.event-description,
-.event-capacity,
-.event-reservations,
-.event-available-capacity {
-  font-size: 1rem;
-  margin-bottom: 0.5em;
+  font-size: 1.5rem;
 }
 
 .details-button {
-  display: inline-block;
-  padding: 0.75em 1.5em;
-  background-color: #4caf50;
+  background-color: #28a745;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
-  font-weight: bold;
+  padding: 10px 15px;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .details-button:hover {
-  background-color: #45a049;
+  background-color: #218838;
 }
 
-/* Spinner de carga */
-.loading-spinner {
-  border: 6px solid #f3f3f3;
-  border-top: 6px solid #4caf50;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  animation: spin 1s linear infinite;
-  margin: 2em auto;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/* Mensajes */
-.error-message,
+/* Estilo para mensajes */
 .success-message {
+  color: #28a745;
   text-align: center;
-  font-size: 1.2rem;
-  margin-top: 20px;
+  margin-bottom: 15px;
 }
 
 .error-message {
-  color: red;
-}
-
-.success-message {
-  color: #4caf50;
-}
-
-.no-events {
-  font-size: 1.2rem;
+  color: #dc3545;
   text-align: center;
-  color: #666;
+  margin-bottom: 15px;
 }

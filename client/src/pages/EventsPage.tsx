@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './EventsPage.css';
 
@@ -18,7 +17,6 @@ const EventsPage: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
   const API_URL = process.env.REACT_APP_API_URL;
-  const navigate = useNavigate();
 
   // Fetch events on component load
   useEffect(() => {
@@ -85,13 +83,9 @@ const EventsPage: React.FC = () => {
     }
   };
 
-  // Cerrar sesión
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setSuccessMessage('Has cerrado sesión exitosamente.');
-    setTimeout(() => {
-      navigate('/login'); // Redirige al usuario a la página de inicio de sesión
-    }, 1000);
+    window.location.href = '/login'; // Redirección al login después de cerrar sesión
   };
 
   return (
@@ -101,6 +95,7 @@ const EventsPage: React.FC = () => {
           Cerrar Sesión
         </button>
       </div>
+
       <header className="page-header">
         <h1>Eventos Destacados</h1>
         <p>Descubre los eventos más recientes y emocionantes.</p>

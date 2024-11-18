@@ -153,11 +153,13 @@ const AdminPage: React.FC = () => {
 
   return (
     <div className="admin-page">
-      <h1>Panel de Administración</h1>
+      <div className="logout-container">
+        <button className="logout-button" onClick={handleLogout}>
+          Cerrar Sesión
+        </button>
+      </div>
 
-      <button className="logout-button" onClick={handleLogout}>
-        Cerrar Sesión
-      </button>
+      <h1>Panel de Administración</h1>
 
       {message && <p className="message">{message}</p>}
 
