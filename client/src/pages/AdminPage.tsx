@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AdminPage.css';
 
@@ -15,16 +16,17 @@ const AdminPage: React.FC = () => {
   const [titulo, setTitulo] = useState<string>('');
   const [descripcion, setDescripcion] = useState<string>('');
   const [fecha, setFecha] = useState<string>('');
-  const [capacidad, setCapacidad] = useState<number>(0); // Nuevo estado para la capacidad
+  const [capacidad, setCapacidad] = useState<number>(0);
   const [message, setMessage] = useState<string>('');
   const API_URL = process.env.REACT_APP_API_URL;
+  const navigate = useNavigate();
 
   // Obtener todos los eventos
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/events`);
-        const data = Array.isArray(response.data) ? response.data : []; // Asegura que sea un arreglo
+        const data = Array.isArray(response.data) ? response.data : [];
         setEvents(data);
       } catch (error) {
         console.error('Error al obtener los eventos', error);
@@ -39,7 +41,7 @@ const AdminPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem('token'); // Asumiendo que el token está en localStorage
+      const token = localStorage.getItem('token');
       if (!token) {
         setMessage('Por favor, inicia sesión para crear un evento.');
         return;
@@ -49,7 +51,7 @@ const AdminPage: React.FC = () => {
         headers: { Authorization: `Bearer ${token}` },
       };
 
-      const newEvent = { titulo, descripcion, fecha, capacidad }; // Incluye la capacidad
+      const newEvent = { titulo, descripcion, fecha, capacidad };
       const response = await axios.post(`${API_URL}/api/events`, newEvent, config);
 
       setEvents((prevEvents) =>
@@ -58,7 +60,7 @@ const AdminPage: React.FC = () => {
       setTitulo('');
       setDescripcion('');
       setFecha('');
-      setCapacidad(0); // Restablece la capacidad
+      setCapacidad(0);
       setMessage('Evento creado exitosamente.');
     } catch (error: any) {
       console.error('Error al crear el evento:', error);
@@ -142,14 +144,23 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  // Cerrar sesión
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setMessage('Has cerrado sesión exitosamente.');
+    navigate('/login'); // Redirige al usuario a la página de inicio de sesión
+  };
+
   return (
     <div className="admin-page">
       <h1>Panel de Administración</h1>
 
-      {/* Mensaje de éxito/error */}
+      <button className="logout-button" onClick={handleLogout}>
+        Cerrar Sesión
+      </button>
+
       {message && <p className="message">{message}</p>}
 
-      {/* Formulario para crear eventos */}
       <form onSubmit={handleCreateEvent} className="event-form">
         <h2>Crear Nuevo Evento</h2>
         <div>
@@ -194,7 +205,6 @@ const AdminPage: React.FC = () => {
         <button type="submit">Crear Evento</button>
       </form>
 
-      {/* Lista de eventos */}
       <ul className="event-list">
         {Array.isArray(events) &&
           events.map((event) => (
